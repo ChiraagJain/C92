@@ -15,16 +15,65 @@ document.getElementById("player_answer").innerHTML = "Answer Turn - " + player2_
 
 
 function send(){
-   number1 = document.getElementById("number_1").value;
-   number2 = document.getElementById("number_2").value;
-   actual_answer = parseInt(number1) * parseFloat(number2);
-    question_number = "<h4 id='number_display'>" + number1 + " X " + number2 +"</h4>";
+   getword = document.getElementById("word").value;
+   word = getword.toLowerCase();
+   console.log(word);
+   charat1 = word.charAt(1);
+   console.log(charat1);
+   l_divided_2 = Math.floor(word.length/2);
+    charat2 = word.charAt(l_divided_2);
+    console.log(charat2);
+    l_minus_1 = word.length - 1;
+    charat3 = word.charAt(l_minus_1);
+    console.log(charat3);
+    remove_charat1 = word.replace(charat1,"_");
+    console.log(remove_charat1);
+    remove_charat2 = remove_charat1.replace(charat2,"_");
+    console.log(remove_charat2);
+    remove_charat3 = remove_charat2.replace(charat3,"_");
+    console.log(remove_charat3);
+    question_word = "<h4 id='word_display'>Q. "+remove_charat3 +"</h4>";
     input = " <br> Answer: <input type='text' id='input_check_box'>";
     check_button = "<br><br> <button class='btn btn-info' onclick='check()'>Check</button>";
-    row = question_number + input + check_button;
+    row = question_word + input + check_button;
     document.getElementById("output").innerHTML = row;
-    document.getElementById("number_1").value = "";
-    document.getElementById("number_2").value = "";
-
+    document.getElementById("word").value = "";
     
+}
+
+question_turn = "player1";
+answer_turn = "player2";
+
+function check(){
+    get_answer = document.getElementById("input_check_box").value;
+    answer = get_answer.toLowerCase();
+
+    if(answer == word){
+        if(answer_turn == "player1"){
+            player1_score = player1_score + 1;
+            document.getElementById("player1_score").innerHTML = player1_score;
+        }
+        else {
+            player2_score = player2_score + 1;
+            document.getElementById("player2_score").innerHTML = player2_score;
+        }
+    }
+
+    if(question_turn == "player1"){
+        question_turn = "player2";
+        document.getElementById("player_question").innerHTML = "Question Turn - " + player2_name;
+    }
+    else{
+        question_turn = "player1";
+        document.getElementById("player_question").innerHTML = "Question  Turn - " + player1_name;
+    }
+    if(answer_turn == "player1"){
+        answer_turn = "player2";
+        document.getElementById("player_answer").innerHTML = "Answer Turn - " + player2_name;
+    }
+    else{
+        answer_turn = "player1";
+        document.getElementById("player_answer").innerHTML = "Answer Turn - " + player1_name;
+    }
+    document.getElementById("output").innerHTML = "";
 }
